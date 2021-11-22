@@ -91,9 +91,9 @@ namespace lsp
             destroy();
         }
 
-        void surge_filter::init(plug::IWrapper *wrapper)
+        void surge_filter::init(plug::IWrapper *wrapper, plug::IPort **ports)
         {
-            plug::Module::init(wrapper);
+            plug::Module::init(wrapper, ports);
 
             // Allocate buffers
             size_t meshbuf      = align_size(meta::surge_filter_metadata::MESH_POINTS, DEFAULT_ALIGN);
@@ -139,74 +139,74 @@ namespace lsp
             // Bind input audio ports
             for (size_t i=0; i<nChannels; ++i)
             {
-                TRACE_PORT(vPorts[port_id]);
-                vChannels[i].pIn    = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                vChannels[i].pIn    = ports[port_id++];
             }
 
             // Bind output audio ports
             for (size_t i=0; i<nChannels; ++i)
             {
-                TRACE_PORT(vPorts[port_id]);
-                vChannels[i].pOut   = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                vChannels[i].pOut   = ports[port_id++];
             }
 
             // Bind control ports
-            TRACE_PORT(vPorts[port_id]);
-            pBypass         = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pModeIn         = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pModeOut        = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pGainIn         = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pThreshOn       = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pThreshOff      = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pRmsLen         = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pFadeIn         = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pFadeOut        = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pFadeInDelay    = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pFadeOutDelay   = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pActive         = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pGainOut        = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pMeshIn         = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pMeshOut        = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pMeshGain       = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pMeshEnv        = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pGainVisible    = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pEnvVisible     = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pGainMeter      = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pEnvMeter       = vPorts[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pBypass         = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pModeIn         = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pModeOut        = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pGainIn         = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pThreshOn       = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pThreshOff      = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pRmsLen         = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pFadeIn         = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pFadeOut        = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pFadeInDelay    = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pFadeOutDelay   = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pActive         = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pGainOut        = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pMeshIn         = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pMeshOut        = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pMeshGain       = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pMeshEnv        = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pGainVisible    = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pEnvVisible     = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pGainMeter      = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pEnvMeter       = ports[port_id++];
 
             // Bind custom channel ports
             for (size_t i=0; i<nChannels; ++i)
             {
                 channel_t *c    = &vChannels[i];
 
-                TRACE_PORT(vPorts[port_id]);
-                c->pInVisible       = vPorts[port_id++];
-                TRACE_PORT(vPorts[port_id]);
-                c->pOutVisible      = vPorts[port_id++];
-                TRACE_PORT(vPorts[port_id]);
-                c->pMeterIn         = vPorts[port_id++];
-                TRACE_PORT(vPorts[port_id]);
-                c->pMeterOut        = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                c->pInVisible       = ports[port_id++];
+                TRACE_PORT(ports[port_id]);
+                c->pOutVisible      = ports[port_id++];
+                TRACE_PORT(ports[port_id]);
+                c->pMeterIn         = ports[port_id++];
+                TRACE_PORT(ports[port_id]);
+                c->pMeterOut        = ports[port_id++];
             }
 
             // Initialize time points
