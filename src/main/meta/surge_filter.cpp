@@ -102,6 +102,15 @@ namespace lsp
             PORTS_END
         };
 
+        const meta::bundle_t surge_filter_bundle =
+        {
+            "surge_filter",
+            "Surge Filter",
+            B_UTILITIES,
+            "CuySiF1VSj8",
+            "This plugin is designed mostly as a workaround for systems which don't support\nsmooth fade-ins and fade-outs of audio stream on playback start and stop events.\nSuch events may produce noticeable pops, especially when the audio stream is\nadditionally amplified."
+        };
+
         const meta::plugin_t surge_filter_mono =
         {
             "Sprungfilter Mono",
@@ -120,7 +129,8 @@ namespace lsp
             surge_filter_mono_ports,
             "util/surge_filter.xml",
             NULL,
-            mono_plugin_port_groups
+            mono_plugin_port_groups,
+            &surge_filter_bundle
         };
 
         const meta::plugin_t surge_filter_stereo =
@@ -141,7 +151,8 @@ namespace lsp
             surge_filter_stereo_ports,
             "util/surge_filter.xml",
             NULL,
-            stereo_plugin_port_groups
+            stereo_plugin_port_groups,
+            &surge_filter_bundle
         };
     } // namespace meta
 } // namespace lsp
