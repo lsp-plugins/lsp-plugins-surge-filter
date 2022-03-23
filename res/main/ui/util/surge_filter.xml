@@ -1,0 +1,249 @@
+<plugin resizable="true">
+	<vbox>
+		<!-- Top part -->
+		<grid rows="1" cols="2" hspacing="4" expand="true">
+			<group ui:inject="GraphGroup" ipadding.h="0" ipadding="0" expand="true" fill="true" text="labels.graphs.time">
+				<!-- Time graph -->
+				<graph width.min="560" height.min="280" expand="true">
+					<origin hpos="1" vpos="-1" visible="false"/>
+
+					<!-- Gray grid -->
+					<ui:for id="t" first="-132" last="12" step="24">
+						<marker v="${t}  db" ox="1" oy="0" color="graph_alt_1"/>
+					</ui:for>
+					<ui:for id="t" first="0" last="4">
+						<marker v="${t}.25" ox="0" oy="1" color="graph_alt_2"/>
+						<marker v="${t}.5" ox="0" oy="1" color="graph_alt_1"/>
+						<marker v="${t}.75" ox="0" oy="1" color="graph_alt_2"/>
+					</ui:for>
+
+					<!-- Yellow grid -->
+					<!-- <marker v="1 db" ox="1" oy="0" color="graph_sec"/> -->
+					<ui:for id="t" first="-120" last="-24" step="24">
+						<marker v="${t}  db" ox="1" oy="0" color="graph_sec"/>
+					</ui:for>
+					<ui:for id="t" first="1" last="4">
+						<marker v="${t}" ox="0" oy="1" color="graph_sec"/>
+					</ui:for>
+
+					<!-- Axis -->
+					<axis min="0" max="5" color="graph_prim" angle="1.0" log="false" visibility="false"/>
+					<axis min="-144 db" max="24 db" color="graph_prim" angle="0.5" log="true" visibility="false"/>
+
+					<!-- Baseline -->
+					<marker v="0 db" ox="1" oy="0" color="graph_prim" width="2"/>
+
+					<!-- Meshes -->
+					<ui:if test="(ex :ilm)">
+						<mesh id="ig" width="2" color="left_in" visibility=":igv"/>
+						<mesh id="og" width="2" color="left" visibility=":ogv"/>
+					</ui:if>
+
+					<ui:if test="(ex :ilm_r)">
+						<mesh id="ig" width="2" color="left_in" visibility=":igv_l"/>
+						<mesh id="ig" width="2" color="right_in" visibility=":igv_r"/>
+						<mesh id="og" width="2" color="left" visibility=":ogv_l"/>
+						<mesh id="og" width="2" color="right" visibility=":ogv_r"/>
+					</ui:if>
+
+					<mesh id="eg" width="2" color="envelope" visibility=":ev"/>
+					<mesh id="grg" width="2" color="bright_blue" visibility=":grv"/>
+
+					<!-- Markers -->
+					<marker id="thr_on" color="threshold" ox="1" oy="0"/>
+					<marker id="thr_off" color="blue" ox="1" oy="0"/>
+
+					<!-- Text -->
+					<ui:with x="5" halign="1" valign="1">
+						<text y="1 db" text="graph.values.x:db" text:value="0"/>
+						<text y="12 db" text="+12" valign="1"/>
+						<text y="-144 db" text="graph.units.s" valign="1"/>
+					</ui:with>
+					<ui:for id="t" first="-132" last="-12" step="12">
+						<text y="${t} db" text="${t}" x="5" halign="1" valign="1"/>
+					</ui:for>
+					<ui:for id="t" first="0" last="4" step="1">
+						<text y="-144 db" text="${t}" x="${t}" halign="-1" valign="1"/>
+						<text y="-144 db" text="${t}.5" x="${t}.5" halign="-1" valign="1"/>
+					</ui:for>
+
+				</graph>
+			</group>
+
+			<grid rows="3" cols="4" hfill="false" hexpand="false" hspacing="4">
+				<ui:with bg.color="bg_schema">
+					<label text="labels.Env_elope" padding="4"/>
+					<label text="labels.gain_" padding="4"/>
+					<label text="labels.chan.in" padding="4"/>
+					<label text="labels.chan.out" padding="4"/>
+				</ui:with>
+
+				<ui:if test="(ex :ilm)">
+					<ui:with bg.color="bg_schema">
+						<button id="ev" height="10" width="22" ui:inject="Button_violet" led="true"/>
+						<button id="grv" height="10" width="22" ui:inject="Button_blue" led="true"/>
+						<button id="igv" height="10" width="22" ui:inject="Button_mono" led="true"/>
+						<button id="ogv" height="10" width="22" ui:inject="Button_mono" led="true"/>
+					</ui:with>
+					<!-- Envelope signal meter -->
+					<ledmeter vexpand="true" height.min="256" angle="1">
+						<ledchannel id="em" min="-144 db" max="24 db" log="true" type="peak" balance="0 db" balance.visibility="true" activity=":ev" value.color="envelope"/>
+					</ledmeter>
+
+					<!-- Gain signal meter -->
+					<ledmeter vexpand="true" height.min="256" angle="1">
+						<ledchannel id="grm" min="-144 db" max="24 db" log="true" type="peak" balance="0 db" balance.visibility="true" activity=":grv" value.color="blue"/>
+					</ledmeter>
+
+					<!-- Input signal meter -->
+					<ledmeter vexpand="true" height.min="256" angle="1">
+						<ledchannel id="ilm" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" activity=":igv" value.color="mono"/>
+					</ledmeter>
+
+					<!-- Output signal meter -->
+					<ledmeter vexpand="true" height.min="256" angle="1">
+						<ledchannel id="olm" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" activity=":ogv" value.color="mono"/>
+					</ledmeter>
+				</ui:if>
+
+				<ui:if test="(ex :ilm_r)">
+					<ui:with bg.color="bg_schema">
+						<grid rows="2" cols="2" fill="false" hspacing="2">
+							<button id="ev" height="10" width="22" ui:inject="Button_violet" led="true"/>
+						</grid>
+
+						<grid rows="2" cols="2" fill="false" hspacing="2">
+							<button id="grv" height="10" width="22" ui:inject="Button_blue" led="true"/>
+						</grid>
+
+						<grid rows="2" cols="2" fill="false" hspacing="2">
+							<button id="igv_l" size="10" ui:inject="Button_left" led="true"/>
+							<button id="igv_r" size="10" ui:inject="Button_right" led="true"/>
+						</grid>
+
+						<grid rows="2" cols="2" fill="false" hspacing="2">
+							<button id="ogv_l" size="10" ui:inject="Button_left" led="true"/>
+							<button id="ogv_r" size="10" ui:inject="Button_right" led="true"/>
+						</grid>
+					</ui:with>
+					<!-- Envelope signal meter -->
+					<ledmeter vexpand="true" height.min="256" angle="1">
+						<ledchannel id="em" min="-144 db" max="24 db" log="true" type="peak" balance="0 db" balance.visibility="true" activity=":ev" value.color="envelope"/>
+					</ledmeter>
+
+					<!-- Gain signal meter -->
+					<ledmeter vexpand="true" height.min="256" angle="1">
+						<ledchannel id="grm" min="-144 db" max="24 db" log="true" type="peak" balance="0 db" balance.visibility="true" activity=":grv" value.color="blue"/>
+					</ledmeter>
+
+					<!-- Input signal meter -->
+					<ledmeter vexpand="true" height.min="256" angle="1">
+						<ledchannel id="ilm_l" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" activity=":igv_l" value.color="left_in"/>
+						<ledchannel id="ilm_r" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" activity=":igv_r" value.color="right_in"/>
+					</ledmeter>
+
+					<!-- Output signal meter -->
+					<ledmeter vexpand="true" height.min="256" angle="1">
+						<ledchannel id="olm_l" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" activity=":ogv_l" value.color="left"/>
+						<ledchannel id="olm_r" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" activity=":ogv_r" value.color="right"/>
+					</ledmeter>
+				</ui:if>
+			</grid>
+		</grid>
+
+		<!-- Separator -->
+		<void bg.color="bg" fill="true" pad.v="2" reduce="true"/>
+
+		<!-- Bottom part -->
+		<group text="labels.plug.surge_filter" ipadding="0">
+			<grid rows="4" cols="15">
+				<!-- r1 -->
+				<label text="labels.input" pad.h="6" width.min="38"/>
+				<cell rows="4"><vsep pad.h="2" bg.color="bg" hreduce="true"/></cell>
+				<label text="labels.signal.rms" color="red" pad.h="6" width.min="38"/>
+				<cell rows="4"><vsep pad.h="2" bg.color="bg" hreduce="true"/></cell>
+				<cell cols="4"><label text="labels.signal.fade_in"/></cell>
+				<cell rows="4"><vsep pad.h="2" bg.color="bg" hreduce="true"/></cell>
+				<cell cols="4"><label text="labels.signal.fade_out"/></cell>
+				<cell rows="4"><vsep pad.h="2" bg.color="bg" hreduce="true"/></cell>
+				<label text="labels.output" pad.v="4" pad.h="6" vreduce="true"/>
+				<!-- r2 -->
+				<hsep pad.v="2" bg.color="bg" vreduce="true"/>
+				<hsep pad.v="2" bg.color="bg" vreduce="true"/>
+				<cell cols="4"><hsep pad.v="2" bg.color="bg" vreduce="true"/></cell>
+				<cell cols="4"><hsep pad.v="2" bg.color="bg" vreduce="true"/></cell>
+				<hsep pad.v="2" bg.color="bg" vreduce="true"/>
+				<!-- r3 -->
+				<knob id="input" pad.t="4"/>
+				<knob id="rms" scolor="red" pad.t="4"/>
+				<cell cols="2">
+					<hbox fill="false" pad.t="4" pad.h="6">
+						<knob id="thr_on" scolor="threshold" pad.r="4"/>
+						<vbox>
+							<label text="labels.thresh_old"/>
+							<value id="thr_on" sline="true" width.min="54"/>
+						</vbox>
+					</hbox>
+				</cell>
+				<cell cols="2">
+					<hbox fill="false" pad.t="4" pad.h="6">
+						<knob id="fadein" pad.r="4"/>
+						<vbox>
+							<label text="labels.time"/>
+							<value id="fadein" sline="true" width.min="42"/>
+						</vbox>
+					</hbox>
+				</cell>
+				<cell cols="2">
+					<hbox fill="false" pad.t="4" pad.h="6">
+						<knob id="thr_off" scolor="threshold" pad.r="4"/>
+						<vbox>
+							<label text="labels.thresh_old"/>
+							<value id="thr_off" sline="true" width.min="54"/>
+						</vbox>
+					</hbox>
+				</cell>
+				<cell cols="2">
+					<hbox fill="false" pad.t="4" pad.h="6">
+						<knob id="fadeout" scolor="red" pad.r="4"/>
+						<vbox>
+							<label text="labels.time" color="red"/>
+							<value id="fadeout" sline="true" width.min="42"/>
+						</vbox>
+					</hbox>
+				</cell>
+				<knob id="output" pad.t="4"/>
+				<!-- r4 -->
+				<value id="input" width.min="32"/>
+				<value id="rms" width.min="32"/>
+				<cell cols="2" fill="false">
+					<combo id="modein" width.min="93"/>
+				</cell>
+				<cell cols="2">
+					<hbox fill="false" pad.v="4" pad.h="6">
+						<knob id="fidelay" pad.r="4"/>
+						<vbox>
+							<label text="labels.delay"/>
+							<value id="fidelay" sline="true" width.min="42"/>
+						</vbox>
+					</hbox>
+				</cell>
+				<cell cols="2" fill="false">
+					<combo id="modeout" width.min="93"/>
+				</cell>
+				<cell cols="2">
+					<hbox fill="false" pad.v="4" pad.h="6">
+						<knob id="fodelay" pad.r="4"/>
+						<vbox>
+							<label text="labels.delay"/>
+							<value id="fodelay" sline="true" width.min="42"/>
+						</vbox>
+					</hbox>
+				</cell>
+				<value id="output" width.min="32"/>
+
+			</grid>
+		</group>
+	</vbox>
+
+</plugin>

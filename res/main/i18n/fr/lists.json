@@ -1,0 +1,9 @@
+{
+	"surge": {
+		"cubic": "Cubique",
+		"gaussian": "Gaussien",
+		"linear": "Linéaire",
+		"parabolic": "Parabolique",
+		"sine": "Sinusoïdal"
+	}
+}
