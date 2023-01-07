@@ -38,7 +38,9 @@ namespace lsp
 {
     namespace meta
     {
-        static const int surge_filter_classes[] = { C_DYNAMICS, -1 };
+        static const int plugin_classes[]           = { C_DYNAMICS, -1 };
+        static const int clap_features_mono[]       = { CF_AUDIO_EFFECT, CF_UTILITY, CF_MONO, -1 };
+        static const int clap_features_stereo[]     = { CF_AUDIO_EFFECT, CF_UTILITY, CF_STEREO, -1 };
 
         static const port_item_t surge_modes[] =
         {
@@ -123,8 +125,10 @@ namespace lsp
             "feli",
             LSP_LADSPA_SURGE_FILTER_BASE + 0,
             LSP_LADSPA_URI("surge_filter_mono"),
+            LSP_CLAP_URI("surge_filter_mono"),
             LSP_PLUGINS_SURGE_FILTER_VERSION,
-            surge_filter_classes,
+            plugin_classes,
+            clap_features_mono,
             E_INLINE_DISPLAY | E_DUMP_STATE,
             surge_filter_mono_ports,
             "util/surge_filter.xml",
@@ -145,8 +149,10 @@ namespace lsp
             "crjf",
             LSP_LADSPA_SURGE_FILTER_BASE + 1,
             LSP_LADSPA_URI("surge_filter_stereo"),
+            LSP_CLAP_URI("surge_filter_stereo"),
             LSP_PLUGINS_SURGE_FILTER_VERSION,
-            surge_filter_classes,
+            plugin_classes,
+            clap_features_stereo,
             E_INLINE_DISPLAY | E_DUMP_STATE,
             surge_filter_stereo_ports,
             "util/surge_filter.xml",
@@ -154,5 +160,5 @@ namespace lsp
             stereo_plugin_port_groups,
             &surge_filter_bundle
         };
-    } // namespace meta
-} // namespace lsp
+    } /* namespace meta */
+} /* namespace lsp */
