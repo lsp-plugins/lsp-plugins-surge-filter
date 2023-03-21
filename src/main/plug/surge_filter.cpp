@@ -19,12 +19,14 @@
  * along with lsp-plugins-surge-filter. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <private/plugins/surge_filter.h>
 #include <lsp-plug.in/common/alloc.h>
+#include <lsp-plug.in/common/debug.h>
 #include <lsp-plug.in/dsp/dsp.h>
 #include <lsp-plug.in/dsp-units/units.h>
 #include <lsp-plug.in/shared/id_colors.h>
 #include <lsp-plug.in/stdlib/math.h>
+
+#include <private/plugins/surge_filter.h>
 
 #define BUFFER_SIZE     0x1000
 #define TRACE_PORT(p)   lsp_trace("  port id=%s", (p)->metadata()->id);
