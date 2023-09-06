@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2021 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2021 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2023 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2023 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-surge-filter
  * Created on: 3 авг. 2021 г.
@@ -29,12 +29,17 @@
 #include <private/plugins/surge_filter.h>
 
 #define BUFFER_SIZE     0x1000
-#define TRACE_PORT(p)   lsp_trace("  port id=%s", (p)->metadata()->id);
 
 namespace lsp
 {
     namespace plugins
     {
+        static plug::IPort *TRACE_PORT(plug::IPort *p)
+        {
+            lsp_trace("  port id=%s", (p)->metadata()->id);
+            return p;
+        }
+
         //-------------------------------------------------------------------------
         // Plugin factory
         static const meta::plugin_t *plugins[] =
@@ -90,7 +95,7 @@ namespace lsp
 
         surge_filter::~surge_filter()
         {
-            destroy();
+            do_destroy();
         }
 
         void surge_filter::init(plug::IWrapper *wrapper, plug::IPort **ports)
@@ -140,75 +145,44 @@ namespace lsp
 
             // Bind input audio ports
             for (size_t i=0; i<nChannels; ++i)
-            {
-                TRACE_PORT(ports[port_id]);
-                vChannels[i].pIn    = ports[port_id++];
-            }
+                vChannels[i].pIn    = TRACE_PORT(ports[port_id++]);
 
             // Bind output audio ports
             for (size_t i=0; i<nChannels; ++i)
-            {
-                TRACE_PORT(ports[port_id]);
-                vChannels[i].pOut   = ports[port_id++];
-            }
+                vChannels[i].pOut   = TRACE_PORT(ports[port_id++]);
 
             // Bind control ports
-            TRACE_PORT(ports[port_id]);
-            pBypass         = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pModeIn         = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pModeOut        = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pGainIn         = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pThreshOn       = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pThreshOff      = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pRmsLen         = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pFadeIn         = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pFadeOut        = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pFadeInDelay    = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pFadeOutDelay   = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pActive         = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pGainOut        = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pMeshIn         = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pMeshOut        = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pMeshGain       = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pMeshEnv        = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pGainVisible    = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pEnvVisible     = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pGainMeter      = ports[port_id++];
-            TRACE_PORT(ports[port_id]);
-            pEnvMeter       = ports[port_id++];
+            pBypass         = TRACE_PORT(ports[port_id++]);
+            pModeIn         = TRACE_PORT(ports[port_id++]);
+            pModeOut        = TRACE_PORT(ports[port_id++]);
+            pGainIn         = TRACE_PORT(ports[port_id++]);
+            pThreshOn       = TRACE_PORT(ports[port_id++]);
+            pThreshOff      = TRACE_PORT(ports[port_id++]);
+            pRmsLen         = TRACE_PORT(ports[port_id++]);
+            pFadeIn         = TRACE_PORT(ports[port_id++]);
+            pFadeOut        = TRACE_PORT(ports[port_id++]);
+            pFadeInDelay    = TRACE_PORT(ports[port_id++]);
+            pFadeOutDelay   = TRACE_PORT(ports[port_id++]);
+            pActive         = TRACE_PORT(ports[port_id++]);
+            pGainOut        = TRACE_PORT(ports[port_id++]);
+            pMeshIn         = TRACE_PORT(ports[port_id++]);
+            pMeshOut        = TRACE_PORT(ports[port_id++]);
+            pMeshGain       = TRACE_PORT(ports[port_id++]);
+            pMeshEnv        = TRACE_PORT(ports[port_id++]);
+            pGainVisible    = TRACE_PORT(ports[port_id++]);
+            pEnvVisible     = TRACE_PORT(ports[port_id++]);
+            pGainMeter      = TRACE_PORT(ports[port_id++]);
+            pEnvMeter       = TRACE_PORT(ports[port_id++]);
 
             // Bind custom channel ports
             for (size_t i=0; i<nChannels; ++i)
             {
                 channel_t *c    = &vChannels[i];
 
-                TRACE_PORT(ports[port_id]);
-                c->pInVisible       = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                c->pOutVisible      = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                c->pMeterIn         = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                c->pMeterOut        = ports[port_id++];
+                c->pInVisible       = TRACE_PORT(ports[port_id++]);
+                c->pOutVisible      = TRACE_PORT(ports[port_id++]);
+                c->pMeterIn         = TRACE_PORT(ports[port_id++]);
+                c->pMeterOut        = TRACE_PORT(ports[port_id++]);
             }
 
             // Initialize time points
@@ -218,6 +192,12 @@ namespace lsp
         }
 
         void surge_filter::destroy()
+        {
+            plug::Module::destroy();
+            do_destroy();
+        }
+
+        void surge_filter::do_destroy()
         {
             // Drop all channels
             if (vChannels != NULL)
@@ -671,7 +651,7 @@ namespace lsp
             v->write("pGainMeter", pGainMeter);
             v->write("pEnvMeter", pEnvMeter);
         }
-    } // namespace plugins
-} // namespace lsp
+    } /* namespace plugins */
+} /* namespace lsp */
 
 
