@@ -117,6 +117,7 @@ namespace lsp
         {
             "Sprungfilter Mono",
             "Surge Filter Mono",
+            "Surge Filter Mono",
             "SF1M",
             &developers::v_sadovnikov,
             "surge_filter_mono",
@@ -140,6 +141,7 @@ namespace lsp
         const meta::plugin_t surge_filter_stereo =
         {
             "Sprungfilter Stereo",
+            "Surge Filter Stereo",
             "Surge Filter Stereo",
             "SF1S",
             &developers::v_sadovnikov,
