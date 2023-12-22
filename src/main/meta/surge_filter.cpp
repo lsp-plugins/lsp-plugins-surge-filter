@@ -25,7 +25,7 @@
 
 #define LSP_PLUGINS_SURGE_FILTER_VERSION_MAJOR       1
 #define LSP_PLUGINS_SURGE_FILTER_VERSION_MINOR       0
-#define LSP_PLUGINS_SURGE_FILTER_VERSION_MICRO       15
+#define LSP_PLUGINS_SURGE_FILTER_VERSION_MICRO       16
 
 #define LSP_PLUGINS_SURGE_FILTER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -117,6 +117,7 @@ namespace lsp
         {
             "Sprungfilter Mono",
             "Surge Filter Mono",
+            "Surge Filter Mono",
             "SF1M",
             &developers::v_sadovnikov,
             "surge_filter_mono",
@@ -140,6 +141,7 @@ namespace lsp
         const meta::plugin_t surge_filter_stereo =
         {
             "Sprungfilter Stereo",
+            "Surge Filter Stereo",
             "Surge Filter Stereo",
             "SF1S",
             &developers::v_sadovnikov,
