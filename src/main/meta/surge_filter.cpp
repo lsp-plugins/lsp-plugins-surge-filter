@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2021 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2021 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2024 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2024 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-surge-filter
  * Created on: 3 авг. 2021 г.
@@ -124,6 +124,8 @@ namespace lsp
             LSP_LV2_URI("surge_filter_mono"),
             LSP_LV2UI_URI("surge_filter_mono"),
             "feli",
+            LSP_VST3_UID("sf1m    feli"),
+            LSP_VST3UI_UID("sf1m    feli"),
             LSP_LADSPA_SURGE_FILTER_BASE + 0,
             LSP_LADSPA_URI("surge_filter_mono"),
             LSP_CLAP_URI("surge_filter_mono"),
@@ -149,6 +151,8 @@ namespace lsp
             LSP_LV2_URI("surge_filter_stereo"),
             LSP_LV2UI_URI("surge_filter_stereo"),
             "crjf",
+            LSP_VST3_UID("sf1s    crjf"),
+            LSP_VST3UI_UID("sf1s    crjf"),
             LSP_LADSPA_SURGE_FILTER_BASE + 1,
             LSP_LADSPA_URI("surge_filter_stereo"),
             LSP_CLAP_URI("surge_filter_stereo"),
