@@ -40,22 +40,22 @@ namespace lsp
             static constexpr float RMS_MIN          = 4.0f;
             static constexpr float RMS_MAX          = 100.0f;
             static constexpr float RMS_DFL          = 10.0f;
-            static constexpr float RMS_STEP         = 0.01f;
+            static constexpr float RMS_STEP         = 0.001f;
 
             static constexpr float FADEIN_MIN       = 0.0f;
             static constexpr float FADEIN_MAX       = 1000.0f;
             static constexpr float FADEIN_DFL       = 100.0f;
-            static constexpr float FADEIN_STEP      = 0.5f;
+            static constexpr float FADEIN_STEP      = 0.15f;
 
             static constexpr float FADEOUT_MIN      = 0.0f;
             static constexpr float FADEOUT_MAX      = 500.0f;
             static constexpr float FADEOUT_DFL      = 0.0f;
-            static constexpr float FADEOUT_STEP     = 0.5f;
+            static constexpr float FADEOUT_STEP     = 0.1f;
 
             static constexpr float PAUSE_MIN        = 0.0f;
             static constexpr float PAUSE_MAX        = 100.0f;
             static constexpr float PAUSE_DFL        = 10.0f;
-            static constexpr float PAUSE_STEP       = 0.5f;
+            static constexpr float PAUSE_STEP       = 0.02f;
 
             static constexpr size_t MESH_POINTS     = 640;
             static constexpr float MESH_TIME        = 5.0f;
