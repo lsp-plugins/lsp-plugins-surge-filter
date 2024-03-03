@@ -40,10 +40,10 @@
 					</ui:if>
 
 					<ui:if test="(ex :ilm_r)">
-						<mesh id="ig" width="0" color="left_in" fcolor="left_in" fcolor.a="0.8" fill="true" visibility=":igv_l"/>
-						<mesh id="ig" width="0" color="right_in" fcolor="right_in" fcolor.a="0.8" fill="true" visibility=":igv_r"/>
-						<mesh id="og" width="2" color="left" visibility=":ogv_l"/>
-						<mesh id="og" width="2" color="right" visibility=":ogv_r"/>
+						<mesh id="ig" width="0" y.index="1" color="left_in" fcolor="left_in" fcolor.a="0.8" fill="true" visibility=":igv_l"/>
+						<mesh id="ig" width="0" y.index="2" color="right_in" fcolor="right_in" fcolor.a="0.8" fill="true" visibility=":igv_r"/>
+						<mesh id="og" width="2" y.index="1" color="left" visibility=":ogv_l"/>
+						<mesh id="og" width="2" y.index="2" color="right" visibility=":ogv_r"/>
 					</ui:if>
 
 					<mesh id="eg" width="2" color="envelope" visibility=":ev"/>

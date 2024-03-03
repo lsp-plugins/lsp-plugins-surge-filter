@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2023 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2023 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2024 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2024 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-surge-filter
  * Created on: 3 авг. 2021 г.
@@ -23,6 +23,7 @@
 #include <lsp-plug.in/common/debug.h>
 #include <lsp-plug.in/dsp/dsp.h>
 #include <lsp-plug.in/dsp-units/units.h>
+#include <lsp-plug.in/shared/debug.h>
 #include <lsp-plug.in/shared/id_colors.h>
 #include <lsp-plug.in/stdlib/math.h>
 
@@ -34,12 +35,6 @@ namespace lsp
 {
     namespace plugins
     {
-        static plug::IPort *TRACE_PORT(plug::IPort *p)
-        {
-            lsp_trace("  port id=%s", (p)->metadata()->id);
-            return p;
-        }
-
         //-------------------------------------------------------------------------
         // Plugin factory
         static const meta::plugin_t *plugins[] =
@@ -113,12 +108,9 @@ namespace lsp
             vChannels       = new channel_t[nChannels];
             if (vChannels == NULL)
                 return;
-            vBuffer         = bufs;
-            bufs           += BUFFER_SIZE;
-            vEnv            = bufs;
-            bufs           += BUFFER_SIZE;
-            vTimePoints     = bufs;
-            bufs           += meshbuf;
+            vBuffer         = advance_ptr_bytes<float>(bufs, BUFFER_SIZE * sizeof(float));
+            vEnv            = advance_ptr_bytes<float>(bufs, BUFFER_SIZE * sizeof(float));
+            vTimePoints     = advance_ptr_bytes<float>(bufs, meshbuf * sizeof(float));
 
             for (size_t i=0; i<nChannels; ++i)
             {
@@ -128,9 +120,7 @@ namespace lsp
 
                 c->vIn          = NULL;
                 c->vOut         = NULL;
-                c->vBuffer      = bufs;
-                bufs           += BUFFER_SIZE;
-
+                c->vBuffer      = advance_ptr_bytes<float>(bufs, BUFFER_SIZE * sizeof(float));
                 c->bInVisible   = true;
                 c->bOutVisible  = true;
             }
@@ -145,44 +135,44 @@ namespace lsp
 
             // Bind input audio ports
             for (size_t i=0; i<nChannels; ++i)
-                vChannels[i].pIn    = TRACE_PORT(ports[port_id++]);
+                BIND_PORT(vChannels[i].pIn);
 
             // Bind output audio ports
             for (size_t i=0; i<nChannels; ++i)
-                vChannels[i].pOut   = TRACE_PORT(ports[port_id++]);
+                BIND_PORT(vChannels[i].pOut);
 
             // Bind control ports
-            pBypass         = TRACE_PORT(ports[port_id++]);
-            pModeIn         = TRACE_PORT(ports[port_id++]);
-            pModeOut        = TRACE_PORT(ports[port_id++]);
-            pGainIn         = TRACE_PORT(ports[port_id++]);
-            pThreshOn       = TRACE_PORT(ports[port_id++]);
-            pThreshOff      = TRACE_PORT(ports[port_id++]);
-            pRmsLen         = TRACE_PORT(ports[port_id++]);
-            pFadeIn         = TRACE_PORT(ports[port_id++]);
-            pFadeOut        = TRACE_PORT(ports[port_id++]);
-            pFadeInDelay    = TRACE_PORT(ports[port_id++]);
-            pFadeOutDelay   = TRACE_PORT(ports[port_id++]);
-            pActive         = TRACE_PORT(ports[port_id++]);
-            pGainOut        = TRACE_PORT(ports[port_id++]);
-            pMeshIn         = TRACE_PORT(ports[port_id++]);
-            pMeshOut        = TRACE_PORT(ports[port_id++]);
-            pMeshGain       = TRACE_PORT(ports[port_id++]);
-            pMeshEnv        = TRACE_PORT(ports[port_id++]);
-            pGainVisible    = TRACE_PORT(ports[port_id++]);
-            pEnvVisible     = TRACE_PORT(ports[port_id++]);
-            pGainMeter      = TRACE_PORT(ports[port_id++]);
-            pEnvMeter       = TRACE_PORT(ports[port_id++]);
+            BIND_PORT(pBypass);
+            BIND_PORT(pModeIn);
+            BIND_PORT(pModeOut);
+            BIND_PORT(pGainIn);
+            BIND_PORT(pThreshOn);
+            BIND_PORT(pThreshOff);
+            BIND_PORT(pRmsLen);
+            BIND_PORT(pFadeIn);
+            BIND_PORT(pFadeOut);
+            BIND_PORT(pFadeInDelay);
+            BIND_PORT(pFadeOutDelay);
+            BIND_PORT(pActive);
+            BIND_PORT(pGainOut);
+            BIND_PORT(pMeshIn);
+            BIND_PORT(pMeshOut);
+            BIND_PORT(pMeshGain);
+            BIND_PORT(pMeshEnv);
+            BIND_PORT(pGainVisible);
+            BIND_PORT(pEnvVisible);
+            BIND_PORT(pGainMeter);
+            BIND_PORT(pEnvMeter);
 
             // Bind custom channel ports
             for (size_t i=0; i<nChannels; ++i)
             {
                 channel_t *c    = &vChannels[i];
 
-                c->pInVisible       = TRACE_PORT(ports[port_id++]);
-                c->pOutVisible      = TRACE_PORT(ports[port_id++]);
-                c->pMeterIn         = TRACE_PORT(ports[port_id++]);
-                c->pMeterOut        = TRACE_PORT(ports[port_id++]);
+                BIND_PORT(c->pInVisible);
+                BIND_PORT(c->pOutVisible);
+                BIND_PORT(c->pMeterIn);
+                BIND_PORT(c->pMeterOut);
             }
 
             // Initialize time points
@@ -369,9 +359,23 @@ namespace lsp
             plug::mesh_t *mesh    = pMeshGain->buffer<plug::mesh_t>();
             if ((mesh != NULL) && (mesh->isEmpty()) && (bGainVisible))
             {
-                dsp::copy(mesh->pvData[0], vTimePoints, meta::surge_filter_metadata::MESH_POINTS);
-                dsp::copy(mesh->pvData[1], sGain.data(), meta::surge_filter_metadata::MESH_POINTS);
-                mesh->data(2, meta::surge_filter_metadata::MESH_POINTS);
+                float *x    = mesh->pvData[0];
+                float *y    = mesh->pvData[1];
+
+                dsp::copy(&x[2], vTimePoints, meta::surge_filter_metadata::MESH_POINTS);
+                dsp::copy(&y[2], sGain.data(), meta::surge_filter_metadata::MESH_POINTS);
+                x[0]        = x[2] + 0.5f;
+                x[1]        = x[0];
+                y[0]        = GAIN_AMP_0_DB;
+                y[1]        = y[2];
+                x          += meta::surge_filter_metadata::MESH_POINTS + 2;
+                y          += meta::surge_filter_metadata::MESH_POINTS + 2;
+                x[0]        = x[-1] - 0.5f;
+                x[1]        = x[0];
+                y[0]        = y[-1];
+                y[1]        = GAIN_AMP_0_DB;
+
+                mesh->data(2, meta::surge_filter_metadata::MESH_POINTS + 4);
             }
 
             // Sync envelope
@@ -387,18 +391,28 @@ namespace lsp
             mesh            = pMeshIn->buffer<plug::mesh_t>();
             if ((mesh != NULL) && (mesh->isEmpty()))
             {
-                dsp::copy(mesh->pvData[0], vTimePoints, meta::surge_filter_metadata::MESH_POINTS);
+                float *x = mesh->pvData[0];
+
+                dsp::copy(&x[1], vTimePoints, meta::surge_filter_metadata::MESH_POINTS);
+                x[0]    = x[1];
+                x      += meta::surge_filter_metadata::MESH_POINTS + 1;
+                x[0]    = x[-1];
 
                 for (size_t i=0; i<nChannels; ++i)
                 {
                     channel_t *c    = &vChannels[i];
+                    float *y        = mesh->pvData[i+1];
+
                     if (c->bInVisible)
-                        dsp::copy(mesh->pvData[i+1], c->sIn.data(), meta::surge_filter_metadata::MESH_POINTS);
+                        dsp::copy(&y[1], c->sIn.data(), meta::surge_filter_metadata::MESH_POINTS);
                     else
-                        dsp::fill_zero(mesh->pvData[i+1], meta::surge_filter_metadata::MESH_POINTS);
+                        dsp::fill_zero(&y[1], meta::surge_filter_metadata::MESH_POINTS);
+                    y[0]    = 0.0f;
+                    y      += meta::surge_filter_metadata::MESH_POINTS + 1;
+                    y[0]    = 0.0f;
                 }
 
-                mesh->data(nChannels + 1, meta::surge_filter_metadata::MESH_POINTS);
+                mesh->data(nChannels + 1, meta::surge_filter_metadata::MESH_POINTS + 2);
             }
 
             // Sync output mesh

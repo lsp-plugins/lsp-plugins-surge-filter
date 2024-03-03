@@ -65,9 +65,9 @@ namespace lsp
             CONTROL("fodelay", "Fade out cancel delay time", U_MSEC, surge_filter_metadata::PAUSE), \
             BLINK("active", "Activity indicator"), \
             AMP_GAIN("output", "Output gain", 1.0f, GAIN_AMP_P_24_DB), \
-            MESH("ig", "Input signal graph", channels+1, surge_filter_metadata::MESH_POINTS), \
+            MESH("ig", "Input signal graph", channels+1, surge_filter_metadata::MESH_POINTS + 2), \
             MESH("og", "Output signal graph", channels+1, surge_filter_metadata::MESH_POINTS), \
-            MESH("grg", "Gain reduction graph", 2, surge_filter_metadata::MESH_POINTS), \
+            MESH("grg", "Gain reduction graph", 2, surge_filter_metadata::MESH_POINTS + 4), \
             MESH("eg", "Envelope graph", 2, surge_filter_metadata::MESH_POINTS), \
             SWITCH("grv", "Gain reduction visibility", 1.0f), \
             SWITCH("ev", "Envelope visibility", 1.0f), \
