@@ -35,23 +35,23 @@
 
 					<!-- Meshes -->
 					<ui:if test="(ex :ilm)">
-						<mesh id="ig" width="2" color="left_in" visibility=":igv"/>
+						<mesh id="ig" width="0" color="mono_in" fcolor="mono_in" fcolor.a="0.8" fill="true" visibility=":igv"/>
 						<mesh id="og" width="2" color="left" visibility=":ogv"/>
 					</ui:if>
 
 					<ui:if test="(ex :ilm_r)">
-						<mesh id="ig" width="2" color="left_in" visibility=":igv_l"/>
-						<mesh id="ig" width="2" color="right_in" visibility=":igv_r"/>
-						<mesh id="og" width="2" color="left" visibility=":ogv_l"/>
-						<mesh id="og" width="2" color="right" visibility=":ogv_r"/>
+						<mesh id="ig" width="0" y.index="1" color="left_in" fcolor="left_in" fcolor.a="0.8" fill="true" visibility=":igv_l"/>
+						<mesh id="ig" width="0" y.index="2" color="right_in" fcolor="right_in" fcolor.a="0.8" fill="true" visibility=":igv_r"/>
+						<mesh id="og" width="2" y.index="1" color="left" visibility=":ogv_l"/>
+						<mesh id="og" width="2" y.index="2" color="right" visibility=":ogv_r"/>
 					</ui:if>
 
 					<mesh id="eg" width="2" color="envelope" visibility=":ev"/>
-					<mesh id="grg" width="2" color="bright_blue" visibility=":grv"/>
+					<mesh id="grg" width="2" color="bright_blue" fcolor="bright_blue" fcolor.a="0.8" fill="true" visibility=":grv"/>
 
 					<!-- Markers -->
-					<marker id="thr_on" color="threshold" ox="1" oy="0"/>
-					<marker id="thr_off" color="blue" ox="1" oy="0"/>
+						<marker id="thr_off" ox="1" oy="0" editable="true" width="2" pointer="vsize" color="blue" hcolor="blue" lcolor="blue" hlcolor="blue" lborder="25" hlborder="25" color.a="0.1" hcolor.a="0.0" lcolor.a="0.8" hlcolor.a="0.6"/>
+						<marker id="thr_on" ox="1" oy="0" editable="true" width="3" pointer="vsize" color="threshold" hcolor="threshold" lcolor="threshold" hlcolor="threshold" lborder="50" hlborder="50" color.a="0.1" hcolor.a="0.0" lcolor.a="0.8" hlcolor.a="0.6"/>
 
 					<!-- Text -->
 					<ui:with x="5" halign="1" valign="1">
@@ -87,22 +87,22 @@
 					</ui:with>
 					<!-- Envelope signal meter -->
 					<ledmeter vexpand="true" height.min="256" angle="1">
-						<ledchannel id="em" min="-144 db" max="24 db" log="true" type="peak" balance="0 db" balance.visibility="true" activity=":ev" value.color="envelope"/>
+						<ledchannel id="em" min="-144 db" max="24 db" log="true" type="peak" balance="0 db" balance.visibility="true" value.color="envelope"/>
 					</ledmeter>
 
 					<!-- Gain signal meter -->
 					<ledmeter vexpand="true" height.min="256" angle="1">
-						<ledchannel id="grm" min="-144 db" max="24 db" log="true" type="peak" balance="0 db" balance.visibility="true" activity=":grv" value.color="blue"/>
+						<ledchannel id="grm" min="-144 db" max="24 db" log="true" type="peak" balance="0 db" balance.visibility="true" value.color="blue"/>
 					</ledmeter>
 
 					<!-- Input signal meter -->
 					<ledmeter vexpand="true" height.min="256" angle="1">
-						<ledchannel id="ilm" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" activity=":igv" value.color="mono"/>
+						<ledchannel id="ilm" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" value.color="mono"/>
 					</ledmeter>
 
 					<!-- Output signal meter -->
 					<ledmeter vexpand="true" height.min="256" angle="1">
-						<ledchannel id="olm" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" activity=":ogv" value.color="mono"/>
+						<ledchannel id="olm" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" value.color="mono"/>
 					</ledmeter>
 				</ui:if>
 
@@ -128,24 +128,24 @@
 					</ui:with>
 					<!-- Envelope signal meter -->
 					<ledmeter vexpand="true" height.min="256" angle="1">
-						<ledchannel id="em" min="-144 db" max="24 db" log="true" type="peak" balance="0 db" balance.visibility="true" activity=":ev" value.color="envelope"/>
+						<ledchannel id="em" min="-144 db" max="24 db" log="true" type="peak" balance="0 db" balance.visibility="true" value.color="envelope"/>
 					</ledmeter>
 
 					<!-- Gain signal meter -->
 					<ledmeter vexpand="true" height.min="256" angle="1">
-						<ledchannel id="grm" min="-144 db" max="24 db" log="true" type="peak" balance="0 db" balance.visibility="true" activity=":grv" value.color="blue"/>
+						<ledchannel id="grm" min="-144 db" max="24 db" log="true" type="peak" balance="0 db" balance.visibility="true" value.color="blue"/>
 					</ledmeter>
 
 					<!-- Input signal meter -->
 					<ledmeter vexpand="true" height.min="256" angle="1">
-						<ledchannel id="ilm_l" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" activity=":igv_l" value.color="left_in"/>
-						<ledchannel id="ilm_r" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" activity=":igv_r" value.color="right_in"/>
+						<ledchannel id="ilm_l" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" value.color="left_in"/>
+						<ledchannel id="ilm_r" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" value.color="right_in"/>
 					</ledmeter>
 
 					<!-- Output signal meter -->
 					<ledmeter vexpand="true" height.min="256" angle="1">
-						<ledchannel id="olm_l" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" activity=":ogv_l" value.color="left"/>
-						<ledchannel id="olm_r" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" activity=":ogv_r" value.color="right"/>
+						<ledchannel id="olm_l" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" value.color="left"/>
+						<ledchannel id="olm_r" min="-72 db" max="+6 db" log="true" type="rms_peak" peak.visibility="true" value.color="right"/>
 					</ledmeter>
 				</ui:if>
 			</grid>
@@ -190,7 +190,7 @@
 						<knob id="fadein" pad.r="4"/>
 						<vbox>
 							<label text="labels.time"/>
-							<value id="fadein" sline="true" width.min="42"/>
+							<value id="fadein" sline="true" width.min="45"/>
 						</vbox>
 					</hbox>
 				</cell>
@@ -208,7 +208,7 @@
 						<knob id="fadeout" scolor="red" pad.r="4"/>
 						<vbox>
 							<label text="labels.time" color="red"/>
-							<value id="fadeout" sline="true" width.min="42"/>
+							<value id="fadeout" sline="true" width.min="45"/>
 						</vbox>
 					</hbox>
 				</cell>

@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2021 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2021 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2024 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2024 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-surge-filter
  * Created on: 3 авг. 2021 г.
@@ -25,7 +25,7 @@
 
 #define LSP_PLUGINS_SURGE_FILTER_VERSION_MAJOR       1
 #define LSP_PLUGINS_SURGE_FILTER_VERSION_MINOR       0
-#define LSP_PLUGINS_SURGE_FILTER_VERSION_MICRO       16
+#define LSP_PLUGINS_SURGE_FILTER_VERSION_MICRO       17
 
 #define LSP_PLUGINS_SURGE_FILTER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -65,9 +65,9 @@ namespace lsp
             CONTROL("fodelay", "Fade out cancel delay time", U_MSEC, surge_filter_metadata::PAUSE), \
             BLINK("active", "Activity indicator"), \
             AMP_GAIN("output", "Output gain", 1.0f, GAIN_AMP_P_24_DB), \
-            MESH("ig", "Input signal graph", channels+1, surge_filter_metadata::MESH_POINTS), \
+            MESH("ig", "Input signal graph", channels+1, surge_filter_metadata::MESH_POINTS + 2), \
             MESH("og", "Output signal graph", channels+1, surge_filter_metadata::MESH_POINTS), \
-            MESH("grg", "Gain reduction graph", 2, surge_filter_metadata::MESH_POINTS), \
+            MESH("grg", "Gain reduction graph", 2, surge_filter_metadata::MESH_POINTS + 4), \
             MESH("eg", "Envelope graph", 2, surge_filter_metadata::MESH_POINTS), \
             SWITCH("grv", "Gain reduction visibility", 1.0f), \
             SWITCH("ev", "Envelope visibility", 1.0f), \
@@ -124,6 +124,8 @@ namespace lsp
             LSP_LV2_URI("surge_filter_mono"),
             LSP_LV2UI_URI("surge_filter_mono"),
             "feli",
+            LSP_VST3_UID("sf1m    feli"),
+            LSP_VST3UI_UID("sf1m    feli"),
             LSP_LADSPA_SURGE_FILTER_BASE + 0,
             LSP_LADSPA_URI("surge_filter_mono"),
             LSP_CLAP_URI("surge_filter_mono"),
@@ -149,6 +151,8 @@ namespace lsp
             LSP_LV2_URI("surge_filter_stereo"),
             LSP_LV2UI_URI("surge_filter_stereo"),
             "crjf",
+            LSP_VST3_UID("sf1s    crjf"),
+            LSP_VST3UI_UID("sf1s    crjf"),
             LSP_LADSPA_SURGE_FILTER_BASE + 1,
             LSP_LADSPA_URI("surge_filter_stereo"),
             LSP_CLAP_URI("surge_filter_stereo"),
