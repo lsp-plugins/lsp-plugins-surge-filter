@@ -25,7 +25,7 @@
 
 #define LSP_PLUGINS_SURGE_FILTER_VERSION_MAJOR       1
 #define LSP_PLUGINS_SURGE_FILTER_VERSION_MINOR       0
-#define LSP_PLUGINS_SURGE_FILTER_VERSION_MICRO       19
+#define LSP_PLUGINS_SURGE_FILTER_VERSION_MICRO       20
 
 #define LSP_PLUGINS_SURGE_FILTER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -121,14 +121,17 @@ namespace lsp
             "SF1M",
             &developers::v_sadovnikov,
             "surge_filter_mono",
-            LSP_LV2_URI("surge_filter_mono"),
-            LSP_LV2UI_URI("surge_filter_mono"),
-            "feli",
-            LSP_VST3_UID("sf1m    feli"),
-            LSP_VST3UI_UID("sf1m    feli"),
-            LSP_LADSPA_SURGE_FILTER_BASE + 0,
-            LSP_LADSPA_URI("surge_filter_mono"),
-            LSP_CLAP_URI("surge_filter_mono"),
+            {
+                LSP_LV2_URI("surge_filter_mono"),
+                LSP_LV2UI_URI("surge_filter_mono"),
+                "feli",
+                LSP_VST3_UID("sf1m    feli"),
+                LSP_VST3UI_UID("sf1m    feli"),
+                LSP_LADSPA_SURGE_FILTER_BASE + 0,
+                LSP_LADSPA_URI("surge_filter_mono"),
+                LSP_CLAP_URI("surge_filter_mono"),
+                LSP_GST_UID("surge_filter_mono"),
+            },
             LSP_PLUGINS_SURGE_FILTER_VERSION,
             plugin_classes,
             clap_features_mono,
@@ -148,14 +151,17 @@ namespace lsp
             "SF1S",
             &developers::v_sadovnikov,
             "surge_filter_stereo",
-            LSP_LV2_URI("surge_filter_stereo"),
-            LSP_LV2UI_URI("surge_filter_stereo"),
-            "crjf",
-            LSP_VST3_UID("sf1s    crjf"),
-            LSP_VST3UI_UID("sf1s    crjf"),
-            LSP_LADSPA_SURGE_FILTER_BASE + 1,
-            LSP_LADSPA_URI("surge_filter_stereo"),
-            LSP_CLAP_URI("surge_filter_stereo"),
+            {
+                LSP_LV2_URI("surge_filter_stereo"),
+                LSP_LV2UI_URI("surge_filter_stereo"),
+                "crjf",
+                LSP_VST3_UID("sf1s    crjf"),
+                LSP_VST3UI_UID("sf1s    crjf"),
+                LSP_LADSPA_SURGE_FILTER_BASE + 1,
+                LSP_LADSPA_URI("surge_filter_stereo"),
+                LSP_CLAP_URI("surge_filter_stereo"),
+                LSP_GST_UID("surge_filter_stereo"),
+            },
             LSP_PLUGINS_SURGE_FILTER_VERSION,
             plugin_classes,
             clap_features_stereo,
