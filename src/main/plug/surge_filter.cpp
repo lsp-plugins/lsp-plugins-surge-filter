@@ -127,7 +127,7 @@ namespace lsp
 
             // Initialize de-popper
             sDepopper.construct();
-            sGain.set_method(dspu::MM_MINIMUM);
+            sGain.set_method(dspu::MM_ABS_MINIMUM);
 
             // Bind ports
             lsp_trace("Binding ports");
