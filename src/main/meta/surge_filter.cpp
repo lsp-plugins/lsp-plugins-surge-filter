@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2024 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2024 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2025 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2025 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-surge-filter
  * Created on: 3 авг. 2021 г.
@@ -58,7 +58,7 @@ namespace lsp
             AMP_GAIN("input", "Input gain", 1.0f, GAIN_AMP_P_24_DB), \
             EXT_LOG_CONTROL("thr_on", "Threshold for switching on", U_GAIN_AMP, surge_filter_metadata::THRESH), \
             EXT_LOG_CONTROL("thr_off", "Threshold for switching off", U_GAIN_AMP, surge_filter_metadata::THRESH), \
-            LOG_CONTROL("rms", "RMS estimation time", U_MSEC, surge_filter_metadata::RMS), \
+            LOG_CONTROL("rms", "RMS estimation time", "RMS time", U_MSEC, surge_filter_metadata::RMS), \
             CONTROL("fadein", "Fade in time", U_MSEC, surge_filter_metadata::FADEIN), \
             CONTROL("fadeout", "Fade out time", U_MSEC, surge_filter_metadata::FADEOUT), \
             CONTROL("fidelay", "Fade in cancel delay time", U_MSEC, surge_filter_metadata::PAUSE), \
