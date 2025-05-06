@@ -53,8 +53,8 @@ namespace lsp
         };
 
         #define SURGE_FILTER_COMMON(channels)    \
-            COMBO("modein", "Fade in mode", 3, surge_modes),      \
-            COMBO("modeout", "Fade out mode", 3, surge_modes),      \
+            COMBO("modein", "Fade in mode", "Fadein mode", 3, surge_modes),      \
+            COMBO("modeout", "Fade out mode", "Fadeout mode", 3, surge_modes),      \
             AMP_GAIN("input", "Input gain", 1.0f, GAIN_AMP_P_24_DB), \
             EXT_LOG_CONTROL("thr_on", "Threshold for switching on", "On threshold", U_GAIN_AMP, surge_filter_metadata::THRESH), \
             EXT_LOG_CONTROL("thr_off", "Threshold for switching off", "Off threshold", U_GAIN_AMP, surge_filter_metadata::THRESH), \
@@ -69,8 +69,8 @@ namespace lsp
             MESH("og", "Output signal graph", channels+1, surge_filter_metadata::MESH_POINTS), \
             MESH("grg", "Gain reduction graph", 2, surge_filter_metadata::MESH_POINTS + 4), \
             MESH("eg", "Envelope graph", 2, surge_filter_metadata::MESH_POINTS), \
-            SWITCH("grv", "Gain reduction visibility", 1.0f), \
-            SWITCH("ev", "Envelope visibility", 1.0f), \
+            SWITCH("grv", "Gain reduction visibility", "Show reduct", 1.0f), \
+            SWITCH("ev", "Envelope visibility", "Show env", 1.0f), \
             METER_GAIN("grm", "Gain reduction meter", GAIN_AMP_P_24_DB), \
             METER_GAIN("em", "Envelope meter", GAIN_AMP_P_24_DB)
 
@@ -79,8 +79,8 @@ namespace lsp
             PORTS_MONO_PLUGIN,
             BYPASS,
             SURGE_FILTER_COMMON(1),
-            SWITCH("igv", "Input graph visibility", 1.0f),
-            SWITCH("ogv", "Output graph visibility", 1.0f),
+            SWITCH("igv", "Input graph visibility", "Show in", 1.0f),
+            SWITCH("ogv", "Output graph visibility", "Show out", 1.0f),
             METER_GAIN("ilm", "Input level meter", GAIN_AMP_P_24_DB),
             METER_GAIN("olm", "Output level meter", GAIN_AMP_P_24_DB),
 
@@ -92,12 +92,12 @@ namespace lsp
             PORTS_STEREO_PLUGIN,
             BYPASS,
             SURGE_FILTER_COMMON(2),
-            SWITCH("igv_l", "Input graph visibility left", 1.0f),
-            SWITCH("ogv_l", "Output graph visibility left", 1.0f),
+            SWITCH("igv_l", "Input graph visibility left", "Show in L", 1.0f),
+            SWITCH("ogv_l", "Output graph visibility left", "Show out L", 1.0f),
             METER_GAIN("ilm_l", "Input level meter left", GAIN_AMP_P_24_DB),
             METER_GAIN("olm_l", "Output level meter left", GAIN_AMP_P_24_DB),
-            SWITCH("igv_r", "Input graph visibility right", 1.0f),
-            SWITCH("ogv_r", "Output graph visibility right", 1.0f),
+            SWITCH("igv_r", "Input graph visibility right", "Show in R", 1.0f),
+            SWITCH("ogv_r", "Output graph visibility right", "Show out R", 1.0f),
             METER_GAIN("ilm_r", "Input level meter right", GAIN_AMP_P_24_DB),
             METER_GAIN("olm_r", "Output level meter right", GAIN_AMP_P_24_DB),
 
