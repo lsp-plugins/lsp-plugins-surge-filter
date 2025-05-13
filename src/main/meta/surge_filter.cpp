@@ -55,7 +55,7 @@ namespace lsp
         #define SURGE_FILTER_COMMON(channels)    \
             COMBO("modein", "Fade in mode", "Fadein mode", 3, surge_modes),      \
             COMBO("modeout", "Fade out mode", "Fadeout mode", 3, surge_modes),      \
-            AMP_GAIN("input", "Input gain", 1.0f, GAIN_AMP_P_24_DB), \
+            AMP_GAIN("input", "Input gain", "Input gain", 1.0f, GAIN_AMP_P_24_DB), \
             EXT_LOG_CONTROL("thr_on", "Threshold for switching on", "On threshold", U_GAIN_AMP, surge_filter_metadata::THRESH), \
             EXT_LOG_CONTROL("thr_off", "Threshold for switching off", "Off threshold", U_GAIN_AMP, surge_filter_metadata::THRESH), \
             LOG_CONTROL("rms", "RMS estimation time", "RMS time", U_MSEC, surge_filter_metadata::RMS), \
@@ -64,7 +64,7 @@ namespace lsp
             CONTROL("fidelay", "Fade in cancel delay time", "Fade in cancel", U_MSEC, surge_filter_metadata::PAUSE), \
             CONTROL("fodelay", "Fade out cancel delay time", "Fade out cancel", U_MSEC, surge_filter_metadata::PAUSE), \
             BLINK("active", "Activity indicator"), \
-            AMP_GAIN("output", "Output gain", 1.0f, GAIN_AMP_P_24_DB), \
+            AMP_GAIN("output", "Output gain", "Output gain", 1.0f, GAIN_AMP_P_24_DB), \
             MESH("ig", "Input signal graph", channels+1, surge_filter_metadata::MESH_POINTS + 2), \
             MESH("og", "Output signal graph", channels+1, surge_filter_metadata::MESH_POINTS), \
             MESH("grg", "Gain reduction graph", 2, surge_filter_metadata::MESH_POINTS + 4), \
