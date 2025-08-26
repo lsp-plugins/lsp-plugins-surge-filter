@@ -64,7 +64,7 @@
     		<li><b>Cubic</b> - Cubic spline is used to raise the gain value</li>
     		<li><b>Sine</b> - Sine form is used to raise the gain value</li>
     		<li><b>Gaussian</b> - Gaussian function (form of the bell) is used to raise the gain value</li>
-    		<li><b>Parabolic</b> - The parabolic funcion is used to raise the gain value</li>
+    		<li><b>Parabolic</b> - The parabolic function is used to raise the gain value</li>
 		</ul>
     	<li><b>Thresh</b> - The threshold of the RMS envelope for detecting fade-in event</li>
     	<li><b>Time</b> - The overall transition time</li>
@@ -77,7 +77,7 @@
     		<li><b>Cubic</b> - Cubic spline is used to lower the gain value</li>
     		<li><b>Sine</b> - Sine form is used to lower the gain value</li>
     		<li><b>Gaussian</b> - Gaussian function (form of the bell) is used to lower the gain value</li>
-    		<li><b>Parabolic</b> - The parabolic funcion is used to lower the gain value</li>
+    		<li><b>Parabolic</b> - The parabolic function is used to lower the gain value</li>
 		</ul>
     	<li><b>Thresh</b> - The threshold of the RMS envelope for detecting fade-out event</li>
     	<li><b>Time</b> - The overall transition time, <b>impacts the latency of plugin</b></li>
