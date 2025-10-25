@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2023 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2023 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2025 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2025 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-surge-filter
  * Created on: 3 авг. 2021 г.
@@ -69,6 +69,7 @@ namespace lsp
                 float              *vBuffer;            // Buffer for processing
                 float              *vEnv;               // Envelope
                 float              *vTimePoints;        // Time points
+                float              *vIDisplay;          // Buffer for inline display
                 float               fGainIn;            // Input gain
                 float               fGainOut;           // Output gain
                 bool                bGainVisible;       // Gain visible

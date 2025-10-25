@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2024 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2024 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2025 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2025 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-surge-filter
  * Created on: 3 авг. 2021 г.
@@ -57,7 +57,8 @@ namespace lsp
             vChannels       = NULL;
             vBuffer         = NULL;
             vEnv            = NULL;
-            vTimePoints     = 0;
+            vTimePoints     = NULL;
+            vIDisplay       = NULL;
             fGainIn         = 1.0f;
             fGainOut        = 1.0f;
             bGainVisible    = false;
@@ -99,7 +100,7 @@ namespace lsp
 
             // Allocate buffers
             size_t meshbuf      = align_size(meta::surge_filter_metadata::MESH_POINTS, DEFAULT_ALIGN);
-            size_t to_alloc     = 2*BUFFER_SIZE + nChannels * BUFFER_SIZE + meshbuf;
+            size_t to_alloc     = 2*BUFFER_SIZE + nChannels * BUFFER_SIZE + meshbuf*2;
             float *bufs         = alloc_aligned<float>(pData, to_alloc);
             if (bufs == NULL)
                 return;
@@ -111,6 +112,7 @@ namespace lsp
             vBuffer         = advance_ptr_bytes<float>(bufs, BUFFER_SIZE * sizeof(float));
             vEnv            = advance_ptr_bytes<float>(bufs, BUFFER_SIZE * sizeof(float));
             vTimePoints     = advance_ptr_bytes<float>(bufs, meshbuf * sizeof(float));
+            vIDisplay       = advance_ptr_bytes<float>(bufs, meshbuf * sizeof(float));
 
             for (size_t i=0; i<nChannels; ++i)
             {
@@ -363,7 +365,7 @@ namespace lsp
                 float *y    = mesh->pvData[1];
 
                 dsp::copy(&x[2], vTimePoints, meta::surge_filter_metadata::MESH_POINTS);
-                dsp::copy(&y[2], sGain.data(), meta::surge_filter_metadata::MESH_POINTS);
+                sGain.read(&y[2], meta::surge_filter_metadata::MESH_POINTS);
                 x[0]        = x[2] + 0.5f;
                 x[1]        = x[0];
                 y[0]        = GAIN_AMP_0_DB;
@@ -383,7 +385,7 @@ namespace lsp
             if ((mesh != NULL) && (mesh->isEmpty()) && (bEnvVisible))
             {
                 dsp::copy(mesh->pvData[0], vTimePoints, meta::surge_filter_metadata::MESH_POINTS);
-                dsp::copy(mesh->pvData[1], sEnv.data(), meta::surge_filter_metadata::MESH_POINTS);
+                sEnv.read(mesh->pvData[1], meta::surge_filter_metadata::MESH_POINTS);
                 mesh->data(2, meta::surge_filter_metadata::MESH_POINTS);
             }
 
@@ -404,7 +406,7 @@ namespace lsp
                     float *y        = mesh->pvData[i+1];
 
                     if (c->bInVisible)
-                        dsp::copy(&y[1], c->sIn.data(), meta::surge_filter_metadata::MESH_POINTS);
+                        c->sIn.read(&y[1], meta::surge_filter_metadata::MESH_POINTS);
                     else
                         dsp::fill_zero(&y[1], meta::surge_filter_metadata::MESH_POINTS);
                     y[0]    = 0.0f;
@@ -425,7 +427,7 @@ namespace lsp
                 {
                     channel_t *c    = &vChannels[i];
                     if (c->bOutVisible)
-                        dsp::copy(mesh->pvData[i+1], c->sOut.data(), meta::surge_filter_metadata::MESH_POINTS);
+                        c->sOut.read(mesh->pvData[i+1], meta::surge_filter_metadata::MESH_POINTS);
                     else
                         dsp::fill_zero(mesh->pvData[i+1], meta::surge_filter_metadata::MESH_POINTS);
                 }
@@ -527,9 +529,9 @@ namespace lsp
                     continue;
 
                 // Initialize values
-                float *ft       = c->sIn.data();
+                c->sIn.read(vIDisplay, meta::surge_filter_metadata::MESH_POINTS);
                 for (size_t j=0; j<width; ++j)
-                    b->v[1][j]      = ft[size_t(r*j)];
+                    b->v[1][j]      = vIDisplay[size_t(r*j)];
 
                 // Initialize coords
                 dsp::fill(b->v[3], height, width);
@@ -549,9 +551,9 @@ namespace lsp
                     continue;
 
                 // Initialize values
-                float *ft       = c->sOut.data();
+                c->sOut.read(vIDisplay, meta::surge_filter_metadata::MESH_POINTS);
                 for (size_t j=0; j<width; ++j)
-                    b->v[1][j]      = ft[size_t(r*j)];
+                    b->v[1][j]      = vIDisplay[size_t(r*j)];
 
                 // Initialize coords
                 dsp::fill(b->v[3], height, width);
@@ -565,9 +567,9 @@ namespace lsp
             // Draw envelope (if present)
             if (bEnvVisible)
             {
-                float *ft       = sEnv.data();
+                sEnv.read(vIDisplay, meta::surge_filter_metadata::MESH_POINTS);
                 for (size_t j=0; j<width; ++j)
-                    b->v[1][j]      = ft[size_t(r*j)];
+                    b->v[1][j]      = vIDisplay[size_t(r*j)];
 
                 // Initialize coords
                 dsp::fill(b->v[3], height, width);
@@ -581,9 +583,9 @@ namespace lsp
             // Draw function (if present)
             if (bGainVisible)
             {
-                float *ft       = sGain.data();
+                sGain.read(vIDisplay, meta::surge_filter_metadata::MESH_POINTS);
                 for (size_t j=0; j<width; ++j)
-                    b->v[1][j]      = ft[size_t(r*j)];
+                    b->v[1][j]      = vIDisplay[size_t(r*j)];
 
                 // Initialize coords
                 dsp::fill(b->v[3], height, width);
@@ -631,6 +633,7 @@ namespace lsp
             v->write("vBuffer", vBuffer);
             v->write("vEnv", vEnv);
             v->write("vTimePoints", vTimePoints);
+            v->write("vIDisplay", vIDisplay);
             v->write("fGainIn", fGainIn);
             v->write("fGainOut", fGainOut);
             v->write("bGainVisible", bGainVisible);
