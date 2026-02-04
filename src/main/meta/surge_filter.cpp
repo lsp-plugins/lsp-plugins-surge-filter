@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2025 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2025 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2026 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2026 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-surge-filter
  * Created on: 3 авг. 2021 г.
@@ -20,6 +20,7 @@
  */
 
 #include <lsp-plug.in/plug-fw/meta/ports.h>
+#include <lsp-plug.in/plug-fw/meta/registry.h>
 #include <lsp-plug.in/shared/meta/developers.h>
 #include <private/meta/surge_filter.h>
 
@@ -142,6 +143,7 @@ namespace lsp
             mono_plugin_port_groups,
             &surge_filter_bundle
         };
+        LSP_REGISTER_METADATA(surge_filter_mono);
 
         const meta::plugin_t surge_filter_stereo =
         {
@@ -172,5 +174,7 @@ namespace lsp
             stereo_plugin_port_groups,
             &surge_filter_bundle
         };
+        LSP_REGISTER_METADATA(surge_filter_stereo);
+
     } /* namespace meta */
 } /* namespace lsp */
