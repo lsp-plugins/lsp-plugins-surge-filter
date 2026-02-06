@@ -1,7 +1,11 @@
 {
 	"surge_filter": {
-		"name": "Surge Filter",
-		"description": "Das Plugin dient als Behelfslösung für Systeme, die \nkeine stufenlosen Fade-Ins und -Outs beim Starten und \nAnhalten und von Audiostreams unterstützen.\nDieses Verhalten kann hörbare Pops verursachen, vor \nallem, wenn der Audiostream zusätzlich verstärkt wird."
-	}
+		"description": "Das Plugin dient als Behelfslösung für Systeme, die \nkeine stufenlosen Fade-Ins und -Outs beim Starten und \nAnhalten und von Audiostreams unterstützen.\nDieses Verhalten kann hörbare Pops verursachen, vor \nallem, wenn der Audiostream zusätzlich verstärkt wird.",
+		"name": "Surge Filter"
+	},
+    "launcher": {
+        "surge_filter_mono": "Mono",
+        "surge_filter_stereo": "Stereo"
+    }
 }
 
