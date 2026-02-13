@@ -138,7 +138,7 @@ namespace lsp
             clap_features_mono,
             E_INLINE_DISPLAY | E_DUMP_STATE,
             surge_filter_mono_ports,
-            "util/surge_filter.xml",
+            "plugins/util/surge_filter.xml",
             NULL,
             mono_plugin_port_groups,
             &surge_filter_bundle
@@ -169,7 +169,7 @@ namespace lsp
             clap_features_stereo,
             E_INLINE_DISPLAY | E_DUMP_STATE,
             surge_filter_stereo_ports,
-            "util/surge_filter.xml",
+            "plugins/util/surge_filter.xml",
             NULL,
             stereo_plugin_port_groups,
             &surge_filter_bundle
