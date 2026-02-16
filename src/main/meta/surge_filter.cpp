@@ -141,7 +141,8 @@ namespace lsp
             "plugins/util/surge_filter.xml",
             NULL,
             mono_plugin_port_groups,
-            &surge_filter_bundle
+            &surge_filter_bundle,
+            2
         };
         LSP_REGISTER_METADATA(surge_filter_mono);
 
@@ -172,7 +173,8 @@ namespace lsp
             "plugins/util/surge_filter.xml",
             NULL,
             stereo_plugin_port_groups,
-            &surge_filter_bundle
+            &surge_filter_bundle,
+            1
         };
         LSP_REGISTER_METADATA(surge_filter_stereo);
 
