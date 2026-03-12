@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2025 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2025 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2026 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2026 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-surge-filter
  * Created on: 3 авг. 2021 г.
@@ -20,12 +20,13 @@
  */
 
 #include <lsp-plug.in/plug-fw/meta/ports.h>
+#include <lsp-plug.in/plug-fw/meta/registry.h>
 #include <lsp-plug.in/shared/meta/developers.h>
 #include <private/meta/surge_filter.h>
 
 #define LSP_PLUGINS_SURGE_FILTER_VERSION_MAJOR       1
 #define LSP_PLUGINS_SURGE_FILTER_VERSION_MINOR       0
-#define LSP_PLUGINS_SURGE_FILTER_VERSION_MICRO       29
+#define LSP_PLUGINS_SURGE_FILTER_VERSION_MICRO       30
 
 #define LSP_PLUGINS_SURGE_FILTER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -137,11 +138,13 @@ namespace lsp
             clap_features_mono,
             E_INLINE_DISPLAY | E_DUMP_STATE,
             surge_filter_mono_ports,
-            "util/surge_filter.xml",
+            "plugins/util/surge_filter.xml",
             NULL,
             mono_plugin_port_groups,
-            &surge_filter_bundle
+            &surge_filter_bundle,
+            2
         };
+        LSP_REGISTER_METADATA(surge_filter_mono);
 
         const meta::plugin_t surge_filter_stereo =
         {
@@ -167,10 +170,13 @@ namespace lsp
             clap_features_stereo,
             E_INLINE_DISPLAY | E_DUMP_STATE,
             surge_filter_stereo_ports,
-            "util/surge_filter.xml",
+            "plugins/util/surge_filter.xml",
             NULL,
             stereo_plugin_port_groups,
-            &surge_filter_bundle
+            &surge_filter_bundle,
+            1
         };
+        LSP_REGISTER_METADATA(surge_filter_stereo);
+
     } /* namespace meta */
 } /* namespace lsp */

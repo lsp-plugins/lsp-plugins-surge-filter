@@ -1,7 +1,11 @@
 {
 	"surge_filter": {
-		"name": "Surge Filter",
-		"description": "This plugin is designed mostly as a workaround for systems which don't support\nsmooth fade-ins and fade-outs of audio stream on playback start and stop events.\nSuch events may produce noticeable pops, especially when the audio stream is\nadditionally amplified."
-	}
+		"description": "This plugin is designed mostly as a workaround for systems which don't support\nsmooth fade-ins and fade-outs of audio stream on playback start and stop events.\nSuch events may produce noticeable pops, especially when the audio stream is\nadditionally amplified.",
+		"name": "Surge Filter"
+	},
+    "launcher": {
+        "surge_filter_mono": "Mono",
+        "surge_filter_stereo": "Stereo"
+    }
 }
 
